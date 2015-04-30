@@ -36,6 +36,7 @@ void qsort(T* __restrict__ a, int l, int r) {
 }
 
 int main(int argc, char** argv) {
+	Common::Timer timer;
 	int size = 100000;
 	if (argc > 1) {
 		size = atoi(argv[1]);
@@ -48,11 +49,13 @@ int main(int argc, char** argv) {
 	int* numbers = new int[size];
 	for (int i = 0; i < size; ++i) numbers[i] = i;
 
-	Common::Timer timer;
+	std::cout << "Initialization took " << timer.get() << "ms" << std::endl;
 	std::shuffle(numbers, numbers + size, std::mt19937{std::random_device{}()});
-	std::cout << "Shuffling took " << timer.getAndReset() << "ms" << std::endl;
+	std::cout << "Initialization + Shuffling took " << timer.getAndReset() << "ms" << std::endl;
 
-	if (skew < 2) {
+	if (skew == 0) {
+		return 0;
+	} else if (skew == 1) {
 		std::sort(numbers, numbers + size);
 		std::cout << "std::sort";
 	} else {
