@@ -4,23 +4,24 @@
 #include "../common/Common/Timer.h"
 
 #define BASECASE 16
+#define likely(x) __builtin_expect((x), 1)
 
 static int skew = 2;
 
 // sort integers [l..r]
-void qsort(int* a, int l, int r) {
+template <typename T>
+void qsort(T* __restrict__ a, int l, int r) {
 	while (r-l > BASECASE) {
-		int p(l+(r-l)/skew), i(l), j(r);
+		T p(l+(r-l)/skew);
+		int i(l), j(r);
 		do {
-			while (a[i] <= p) i++;
-			while (a[j] > p) j--;
+			while (likely(a[i] <= p)) i++;
+			while (likely(a[j] > p)) --j;
 			if (i <= j) {
-				int tmp = a[i];
-				a[i++] = a[j];
-				a[j--] = tmp;
+				std::swap(a[i++], a[j--]);
 			}
 		} while (i <= j);
-		if (i < (l+r)/2) {
+		if (i < l+(r-l)/2) {
 			qsort(a, l, j);
 			l = j;
 		} else {
@@ -30,6 +31,7 @@ void qsort(int* a, int l, int r) {
 	}
 	// base case, use insertion sort
 	if (l <= r)
+		// +1 because it uses [begin, end) iterators (i.e., end is exclusive)
 		std::__insertion_sort(a+l, a+r+1, __gnu_cxx::__ops::__iter_less_iter());
 }
 
