@@ -3,7 +3,7 @@
 What if, instead of choosing the "optimal" pivot (i.e. the median),
 you were to knowingly choose a sub-optimal pivot in quicksort?
 
-The answer lies in the depths of the CPU, more specifically, its
+The answer lies in the depths of the CPU, more specifically, in its
 branch prediction unit. If the pivot is the median, then there is
 a 50% chance that the next element will belong to the left side of
 the partition and a 50% chance that it will go right. In other words,
@@ -17,7 +17,7 @@ of the time, resulting in a significantly reduced number of branch
 misses.
 
 To show that this can, in fact, be faster, we use a completely
-artificial "benchmark"---sorting a random permutation of the integers
+artificial "benchmark"—sorting a random permutation of the integers
 0 to n-1. The input size n is specified as the first parameter, the
 skew parameter as the second.
 
@@ -28,7 +28,11 @@ skew parameter as the second.
 Thus, a skew of 2 means equal partioning, 3 means 1/3rd left and 2/3rds right, etc.
 
 On my machine (Haswell Core-i7 4790T), it seems out that s=7 yields
-the fastest running times. This is not to say that we should suddenly
+the fastest running times. The detailed measurements are available
+in [time.pdf](time.pdf) for skew between 2 and 12 as well
+as `std::sort` (all times are averaged over 10 iterations).
+
+All of this is not to say that we should suddenly
 use suboptimal pivot choices. Instead, it might be worth striving for
 branch-avoiding sorting algorithms where they are appropriate. This is
 the rationale behind *Super Scalar Sample Sort* [1], which makes only
@@ -39,7 +43,7 @@ where due to the much longer pipeline (31 steps!), a skew of 11 proved optimal.
 Nowadays, the pipeline comprises 14-19 steps, which explains the lower skew.)
 
 ## References
-[1] Peter Sanders, Sebastian Winkel: **Super Scalar Sample Sort**, ESA 2004. Technical
+- [1] Peter Sanders, Sebastian Winkel: **Super Scalar Sample Sort**, ESA 2004. Technical
 Report available [here](http://people.mpi-inf.mpg.de/~sanders/papers/ssss.ps.gz)
-[2] Kanela Kaligosi, Peter Sanders: **How Branch Mispredictions Affect Quicksort**, ESA 2006.
+- [2] Kanela Kaligosi, Peter Sanders: **How Branch Mispredictions Affect Quicksort**, ESA 2006.
 Available [here](http://algo2.iti.kit.edu/sanders/papers/KalSan06.pdf)
