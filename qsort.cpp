@@ -5,6 +5,7 @@
 
 #define BASECASE 16
 #define likely(x) __builtin_expect((x), 1)
+#define unlikely(x) __builtin_expect((x), 0)
 
 static int skew = 2;
 
@@ -14,13 +15,28 @@ void qsort(T* __restrict__ a, int l, int r) {
 	while (r-l > BASECASE) {
 		T p(l+(r-l)/skew);
 		int i(l), j(r);
-		do {
-			while (likely(a[i] <= p)) i++;
-			while (likely(a[j] > p)) --j;
-			if (i <= j) {
-				std::swap(a[i++], a[j--]);
-			}
-		} while (i <= j);
+		/*
+		 * While nearly the same code seems is generated for both cases, GCC's
+		 * optimizer handles the loop over i a lot better when it is separated
+		 * from i's initialization by a jump, yielding a 2-3% improvement
+		 */
+		if (skew > 2)
+			do {
+				// skewed, left side is smaller
+				while (unlikely(a[i] <= p)) i++;
+				while (likely(a[j] > p)) --j;
+				if (i <= j) {
+					std::swap(a[i++], a[j--]);
+				}
+			} while (i <= j);
+		else
+			do {
+				while (likely(a[i] <= p)) i++;
+				while (likely(a[j] > p)) --j;
+				if (i <= j) {
+					std::swap(a[i++], a[j--]);
+				}
+			} while (i <= j);
 		if (i < l+(r-l)/2) {
 			qsort(a, l, j);
 			l = j;
