@@ -9,11 +9,9 @@ set grid xtics ytics
 
 set key top left
 
-set yrange [2.55:3.7]
-
 set title 'Sorting a random permutation of the integers 0..n-1'
 set xlabel 'log₂(n)'
-set ylabel 'time in ns / n log₂n'
+set ylabel 'running time / n log₂n in nanoseconds'
 
 ## MULTIPLOT(skew) SELECT log(2, n) x, avg(time)*1.0/(n*log(2, n))*1000000.0 AS y, MULTIPLOT
 ## FROM eval GROUP BY n, MULTIPLOT,x ORDER BY MULTIPLOT,x
