@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <cassert>
 #include <iostream>
-#include "../common/Common/Timer.h"
+#include "Timer.h"
 
 #define BASECASE 16
 #define likely(x) __builtin_expect((x), 1)
