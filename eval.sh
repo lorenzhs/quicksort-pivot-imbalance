@@ -7,6 +7,7 @@ for s in {14..26}; do
 		echo -n "$skew… "
 		for it in {1..10}; do
 			./plog.sh ./qsort $n $skew >> qsort.log
+			./qsort $n $skew >> time.log
 		done
 	done;
 	echo "";

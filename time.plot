@@ -1,9 +1,8 @@
-# IMPORT-DATA eval qsort.log
+# IMPORT-DATA eval time.log
 
-set terminal pdf size 40cm,22.5cm linewidth 2.0
+set terminal pdf size 20cm,15cm linewidth 2.0
+set pointsize 0.5
 set output "time.pdf"
-
-set pointsize 0.7
 
 set grid xtics ytics
 
@@ -12,6 +11,8 @@ set key top left
 set title 'Sorting a random permutation of the integers 0..n-1'
 set xlabel 'log₂(n)'
 set ylabel 'running time / n log₂n in nanoseconds'
+
+set yrange [2.19:3.2]
 
 ## MULTIPLOT(skew) SELECT log(2, n) x, avg(time)*1.0/(n*log(2, n))*1000000.0 AS y, MULTIPLOT
 ## FROM eval GROUP BY n, MULTIPLOT,x ORDER BY MULTIPLOT,x

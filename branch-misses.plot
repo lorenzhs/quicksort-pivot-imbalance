@@ -1,13 +1,13 @@
 # IMPORT-DATA eval qsort.log
 
-set terminal pdf size 40cm,22.5cm linewidth 2.0
+set terminal pdf size 20cm,15cm linewidth 2.0
+set pointsize 0.5
 set output "branch-misses.pdf"
-
-set pointsize 0.7
 
 set grid xtics ytics
 
 set key top left
+set yrange [0.23:0.54]
 
 set title 'Sorting a random permutation of the integers 0..n-1'
 set xlabel 'log₂(n)'
