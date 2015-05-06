@@ -27,16 +27,20 @@ skew parameter as the second.
 
 Thus, a skew of 2 means equal partioning, 3 means 1/3rd left and 2/3rds right, etc.
 
-On my machine (Haswell Core-i7 4790T), it seems out that s=7 yields
+On my machine (Haswell Core-i7 4790T), it seems that s=7 yields
 the fastest running times. The detailed measurements are available
-in [time.pdf](time.pdf) for skew between 2 and 12 as well
+in [time.pdf](plots/time.pdf) for skew between 2 and 12 as well
 as `std::sort` (all times are averaged over 10 iterations).
 
 All of this is not to say that we should suddenly
 use suboptimal pivot choices. Instead, it might be worth striving for
 branch-avoiding sorting algorithms where they are appropriate. This is
 the rationale behind *Super Scalar Sample Sort* [1], which makes only
-a constant number of *hard-to-predict branches*.
+a constant number of *hard-to-predict branches*. This is illustrated by
+the running time chart below, which features balanced quicksort, std::sort,
+the fastest unbalanced quicksort, and super-scalar sample sort.
+
+![comparison](/plots/comparison.png)
 
 (This issue has been previously studied on the Prescott architecture in [2],
 where due to the much longer pipeline (31 steps!), a skew of 11 proved optimal.
