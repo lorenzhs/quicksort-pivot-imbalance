@@ -1,4 +1,4 @@
-# IMPORT-DATA eval qsort.log  ssssort-perf.log
+# IMPORT-DATA eval ../qsort.log ../ssssort-perf.log
 
 set terminal pdf size 16cm,12cm linewidth 2.0
 set pointsize 0.5
