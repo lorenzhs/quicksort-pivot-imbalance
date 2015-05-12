@@ -16,8 +16,8 @@ set ylabel 'branch misses / n log₂n'
 ## MULTIPLOT(skew) SELECT log(2, n) x, avg(branch_misses)/(n*log(2,n)) AS y, MULTIPLOT
 ## FROM eval GROUP BY n, MULTIPLOT,x ORDER BY MULTIPLOT,x
 plot \
-    'branch-misses-data.txt' index 0 title "skew=0" with linespoints, \
-    'branch-misses-data.txt' index 1 title "skew=1" with linespoints, \
+    'branch-misses-data.txt' index 0 title "ssssort" with linespoints, \
+    'branch-misses-data.txt' index 1 title "std::sort" with linespoints, \
     'branch-misses-data.txt' index 2 title "skew=2" with linespoints, \
     'branch-misses-data.txt' index 3 title "skew=3" with linespoints, \
     'branch-misses-data.txt' index 4 title "skew=4" with linespoints, \
