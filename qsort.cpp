@@ -31,13 +31,13 @@ void qsort(T* __restrict__ a, int l, int r) {
 			} while (i <= j);
 		else
 			do {
-				while (likely(a[i] <= p)) i++;
-				while (likely(a[j] > p)) --j;
+				while (a[i] <= p) i++;
+				while (a[j] > p) --j;
 				if (i <= j) {
 					std::swap(a[i++], a[j--]);
 				}
 			} while (i <= j);
-		if (i < l+(r-l)/2) {
+		if (i <= l+(r-l)/2) {
 			qsort(a, l, j);
 			l = j;
 		} else {
