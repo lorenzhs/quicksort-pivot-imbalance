@@ -3,7 +3,9 @@
 #include <iostream>
 #include "Timer.h"
 
-#define BASECASE 16
+static const int basecase = 16;
+static const bool debug = false;
+
 #define likely(x) __builtin_expect((x), 1)
 #define unlikely(x) __builtin_expect((x), 0)
 
@@ -12,7 +14,7 @@ static int skew = 2;
 // sort integers [l..r]
 template <typename T>
 void qsort(T* __restrict__ a, int l, int r) {
-	while (r-l > BASECASE) {
+	while (r-l > basecase) {
 		T p(l+(r-l)/skew);
 		int i(l), j(r);
 		/*
@@ -81,16 +83,16 @@ int main(int argc, char** argv) {
 	auto t = timer.get();
 	std::cout << " took " << t << "ms" << std::endl;
 
-#ifndef NDEBUG
-	bool ok = true;
-	for (int i = 0; i < size && ok; ++i) {
-		if (numbers[i] != i) ok=false;
+	if (debug) {
+		bool ok = true;
+		for (int i = 0; i < size && ok; ++i) {
+			if (numbers[i] != i) ok=false;
+		}
+		if (ok)
+			std::cout << "Verified: OK" << std::endl;
+		else
+			std::cout << "Numbers were not sorted!" << std::endl;
 	}
-	if (ok)
-		std::cout << "Verified: OK" << std::endl;
-	else
-		std::cout << "Numbers were not sorted!" << std::endl;
-#endif
 
 	std::cout << "RESULT n=" << size << " skew=" << skew << " time=" << t << std::endl;
 	delete[] numbers;
