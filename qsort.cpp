@@ -45,10 +45,10 @@ void qsort(T* __restrict__ a, int l, int r) {
 			r = i;
 		}
 	}
+
 	// base case, use insertion sort
-	if (l <= r)
-		// +1 because it uses [begin, end) iterators (i.e., end is exclusive)
-		std::__insertion_sort(a+l, a+r+1, __gnu_cxx::__ops::__iter_less_iter());
+	// +1 because it uses [begin, end) iterators (i.e., end is exclusive)
+	std::__insertion_sort(a+l, a+r+1, __gnu_cxx::__ops::__iter_less_iter());
 }
 
 int main(int argc, char** argv) {
@@ -76,7 +76,6 @@ int main(int argc, char** argv) {
 		std::cout << "std::sort";
 	} else {
 		qsort(numbers, 0, size-1);
-		auto t = timer.get();
 		std::cout << "qsort";
 	}
 	auto t = timer.get();
